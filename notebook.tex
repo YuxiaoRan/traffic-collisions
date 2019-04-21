@@ -1,0 +1,2802 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{BinqiZ}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}97}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{import} \PY{n+nn}{re}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}134}]:} \PY{n}{collisions} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pd\PYZus{}collisions\PYZus{}datasd.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{counts} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{traffic\PYZus{}counts\PYZus{}datasd.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}135}]:} \PY{n}{counts}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}135}]:}                        id     street\_name                           limits  \textbackslash{}
+          0              01AV018207           01 AV                    A ST - ASH ST   
+          1              01AV015210           01 AV                    A ST - ASH ST   
+          2              01AV018213           01 AV                    A ST - ASH ST   
+          3              01AV088812           01 AV                ASH ST - BEECH ST   
+          4              01AV068711           01 AV                      B ST - A ST   
+          5              01AV000714           01 AV                      B ST - A ST   
+          6              01AV048412           01 AV                      B ST - C ST   
+          7              01AV048115           01 AV                      B ST - C ST   
+          8              01AV019406           01 AV              BEECH ST - CEDAR ST   
+          9              01AV017909           01 AV              BEECH ST - CEDAR ST   
+          10             01AV018912           01 AV              BEECH ST - CEDAR ST   
+          11             01AV022415           01 AV              BEECH ST - CEDAR ST   
+          12             01AV005516           01 AV              BEECH ST - CEDAR ST   
+          13             01AV058207           01 AV                 E ST - BROADWAY    
+          14             01AV000611           01 AV                 E ST - BROADWAY    
+          15             01AV000814           01 AV                 E ST - BROADWAY    
+          16             01AV016105           01 AV                  ELM ST - FIR ST   
+          17             01AV018909           01 AV                  ELM ST - FIR ST   
+          18             01AV019012           01 AV                  ELM ST - FIR ST   
+          19             01AV114314           01 AV                  ELM ST - FIR ST   
+          20             01AV022515           01 AV                  ELM ST - FIR ST   
+          21             01AV006516           01 AV                  ELM ST - FIR ST   
+          22             01AV048312           01 AV                      F ST - E ST   
+          23             01AV041815           01 AV                      F ST - E ST   
+          24             01AV048212           01 AV                      F ST - G ST   
+          25             01AV041915           01 AV                      F ST - G ST   
+          26             01AV068611           01 AV           GRAPE ST - HAWTHORN ST   
+          27             01AV000914           01 AV           GRAPE ST - HAWTHORN ST   
+          28             01AV114214           01 AV           GRAPE ST - HAWTHORN ST   
+          29             01AV110615           01 AV          ISLAND AV - E HARBOR DR   
+          {\ldots}                   {\ldots}             {\ldots}                              {\ldots}   
+          11629  WORLDTRADEDR009807  WORLD TRADE DR    CONFERENCE WY - CAMINO NORTE    
+          11630  WORLDTRADEDR007410  WORLD TRADE DR    CONFERENCE WY - CAMINO NORTE    
+          11631  WORLDTRADEDR017213  WORLD TRADE DR    CONFERENCE WY - CAMINO NORTE    
+          11632  WORLDTRADEDR004217  WORLD TRADE DR    CONFERENCE WY - CAMINO NORTE    
+          11633  WORLDTRADEDR022817  WORLD TRADE DR  HIGHLAND RH RD - CAM DEL NORTE    
+          11634  WORLDTRADEDR009707  WORLD TRADE DR   HIGHLAND RH RD - CONFERENCE WY   
+          11635  WORLDTRADEDR007310  WORLD TRADE DR   HIGHLAND RH RD - CONFERENCE WY   
+          11636  WORLDTRADEDR017313  WORLD TRADE DR   HIGHLAND RH RD - CONFERENCE WY   
+          11637  WORLDTRADEDR004117  WORLD TRADE DR   HIGHLAND RH RD - CONFERENCE WY   
+          11638  WORLDTRADEDR009907  WORLD TRADE DR  STONEY PEAK DR - HIGHLAND RH RD   
+          11639  WORLDTRADEDR007510  WORLD TRADE DR  STONEY PEAK DR - HIGHLAND RH RD   
+          11640  WORLDTRADEDR017413  WORLD TRADE DR  STONEY PEAK DR - HIGHLAND RH RD   
+          11641  WORLDTRADEDR004317  WORLD TRADE DR  STONEY PEAK DR - HIGHLAND RH RD   
+          11642      WORSCHDR029012       WORSCH DR    DEL MAR TRAILS RD - WORSCH WY   
+          11643      WORSCHDR030915       WORSCH DR    DEL MAR TRAILS RD - WORSCH WY   
+          11644      WORSCHDR023617       WORSCH DR         WORSCH WY - PORTILLA  PL   
+          11645   WYNDHAVENDR025017    WYNDHAVEN DR  QUARTER MILE DR - HALF MILE  DR   
+          11646  YERBASANTADR057810  YERBA SANTA DR       MESQUITE RD - MONTEZUMA RD   
+          11647   YSABELCRKRD057910   YSABEL CRK RD           BANDY CYN RD - SD 078    
+          11648        ZIONAV058010         ZION AV        ARCHWOOD AV - CRAWFORD ST   
+          11649        ZIONAV029607         ZION AV       CLARA LEE AV - ESTRELLA AV   
+          11650        ZIONAV031910         ZION AV       CLARA LEE AV - ESTRELLA AV   
+          11651        ZIONAV041613         ZION AV       CLARA LEE AV - ESTRELLA AV   
+          11652        ZIONAV085311         ZION AV   MISSION GORGE RD - ARCHWOOD AV   
+          11653        ZIONAV112514         ZION AV   MISSION GORGE RD - ARCHWOOD AV   
+          11654         ZOOPL009205          ZOO PL             PARK BL - FLORIDA DR   
+          11655         ZOOPL013708          ZOO PL             PARK BL - FLORIDA DR   
+          11656         ZOOPL033011          ZOO PL             PARK BL - FLORIDA DR   
+          11657         ZOOPL112614          ZOO PL             PARK BL - FLORIDA DR   
+          11658         ZOOPL022018          ZOO PL             PARK BL - FLORIDA DR   
+          
+                all\_count northbound\_count  southbound\_count  eastbound\_count  \textbackslash{}
+          0                          18010               NaN              NaN   
+          1                          20060               NaN              NaN   
+          2                          19597               NaN              NaN   
+          3                           2298               NaN              NaN   
+          4                          15625               NaN              NaN   
+          5                          13569               NaN              NaN   
+          6                          13389               NaN              NaN   
+          7                          13995               NaN              NaN   
+          8                          27450               NaN              NaN   
+          9                          22345               NaN              NaN   
+          10                         18742               NaN              NaN   
+          11                         24463               NaN              NaN   
+          12                         25715               NaN              NaN   
+          13                         10410               NaN              NaN   
+          14                         12905               NaN              NaN   
+          15                         11278               NaN              NaN   
+          16                          3920               NaN              NaN   
+          17                          3285               NaN              NaN   
+          18                          3414               NaN              NaN   
+          19                          3419               NaN              NaN   
+          20                          3477               NaN              NaN   
+          21                          3474               NaN              NaN   
+          22                         11148               NaN              NaN   
+          23                         11421               NaN              NaN   
+          24                         10003               NaN              NaN   
+          25                         10774               NaN              NaN   
+          26                          3210             610.0              NaN   
+          27                          3566             502.0              NaN   
+          28                          3038             514.0              NaN   
+          29                          3355               NaN              NaN   
+          {\ldots}         {\ldots}              {\ldots}               {\ldots}              {\ldots}   
+          11629                       4560            3210.0              NaN   
+          11630                       5955            3525.0              NaN   
+          11631                       4521            3655.0              NaN   
+          11632                       3883            3417.0              NaN   
+          11633                       5060            5154.0              NaN   
+          11634                       4910            3350.0              NaN   
+          11635                       4725            4420.0              NaN   
+          11636                       4056            4167.0              NaN   
+          11637                       5285            4252.0              NaN   
+          11638                       2270            2610.0              NaN   
+          11639                       2235            3570.0              NaN   
+          11640                       1902            3277.0              NaN   
+          11641                       4142            3748.0              NaN   
+          11642                        726             683.0              NaN   
+          11643                        854             842.0              NaN   
+          11644                        551             880.0              NaN   
+          11645                        231             312.0              NaN   
+          11646                        NaN               NaN           1210.0   
+          11647                        310             295.0              NaN   
+          11648                        NaN               NaN           6075.0   
+          11649                        NaN               NaN           6160.0   
+          11650                        NaN               NaN           5975.0   
+          11651                        NaN               NaN           6114.0   
+          11652                        NaN               NaN           6050.0   
+          11653                        NaN               NaN           7320.0   
+          11654                       2620            3680.0              NaN   
+          11655                       4790            4640.0              NaN   
+          11656                       2425            3170.0              NaN   
+          11657                       1935            2490.0              NaN   
+          11658                       3110            3164.0              NaN   
+          
+                 westbound\_count  total\_count  file\_no           count\_date  
+          0                  NaN        18010  0182-07  2007-03-13 00:00:00  
+          1                  NaN        20060  0152-10  2010-03-18 00:00:00  
+          2                  NaN        19597  0182-13  2013-03-12 00:00:00  
+          3                  NaN         2298  0888-12  2012-12-11 00:00:00  
+          4                  NaN        15625  0687-11  2011-09-01 00:00:00  
+          5                  NaN        13569  0007-14  2014-02-11 00:00:00  
+          6                  NaN        13389  0484-12  2012-05-31 00:00:00  
+          7                  NaN        13995  0481-15  2015-06-17 00:00:00  
+          8                  NaN        27450  0194-06  2006-03-23 00:00:00  
+          9                  NaN        22345  0179-09  2009-03-31 00:00:00  
+          10                 NaN        18742  0189-12  2012-03-08 00:00:00  
+          11                 NaN        24463  0224-15  2015-04-30 00:00:00  
+          12                 NaN        25715  0055-16  2016-03-30 00:00:00  
+          13                 NaN        10410  0582-07  2008-01-08 00:00:00  
+          14                 NaN        12905  0006-11  2011-02-08 00:00:00  
+          15                 NaN        11278  0008-14  2014-02-11 00:00:00  
+          16                 NaN         3920  0161-05  2006-03-30 00:00:00  
+          17                 NaN         3285  0189-09  2009-03-31 00:00:00  
+          18                 NaN         3414  0190-12  2012-03-08 00:00:00  
+          19                 NaN         3419  1143-14  2014-08-05 00:00:00  
+          20                 NaN         3477  0225-15  2015-04-30 00:00:00  
+          21                 NaN         3474  0065-16  2016-03-01 00:00:00  
+          22                 NaN        11148  0483-12  2012-05-10 00:00:00  
+          23                 NaN        11421  0418-15  2015-06-09 00:00:00  
+          24                 NaN        10003  0482-12  2012-05-10 00:00:00  
+          25                 NaN        10774  0419-15  2015-06-10 00:00:00  
+          26                 NaN         3820  0686-11  2011-08-30 00:00:00  
+          27                 NaN         4068  0009-14  2014-02-11 00:00:00  
+          28                 NaN         3552  1142-14  2014-08-05 00:00:00  
+          29                 NaN         3355  1106-15  2015-12-22 00:00:00  
+          {\ldots}                {\ldots}          {\ldots}      {\ldots}                  {\ldots}  
+          11629              NaN         7770  0098-07  2007-02-22 00:00:00  
+          11630              NaN         9480  0074-10  2010-02-23 00:00:00  
+          11631              NaN         8176  0172-13  2013-02-26 00:00:00  
+          11632              NaN         7300  0042-17  2017-02-15 00:00:00  
+          11633              NaN        10214  0228-17  2017-04-25 00:00:00  
+          11634              NaN         8260  0097-07  2007-02-22 00:00:00  
+          11635              NaN         9145  0073-10  2010-02-23 00:00:00  
+          11636              NaN         8223  0173-13  2013-02-21 00:00:00  
+          11637              NaN         9537  0041-17  2017-02-15 00:00:00  
+          11638              NaN         4880  0099-07  2007-02-22 00:00:00  
+          11639              NaN         5805  0075-10  2010-03-02 00:00:00  
+          11640              NaN         5179  0174-13  2013-02-26 00:00:00  
+          11641              NaN         7890  0043-17  2017-02-28 00:00:00  
+          11642              NaN         1409  0290-12  2012-03-27 00:00:00  
+          11643              NaN         1696  0309-15  2015-05-21 00:00:00  
+          11644              NaN         1431  0236-17  2017-04-27 00:00:00  
+          11645              NaN          543  0250-17  2017-05-25 00:00:00  
+          11646           1080.0         2290  0578-10  2010-06-24 00:00:00  
+          11647              NaN          605  0579-10  2010-06-22 00:00:00  
+          11648           4815.0        10890  0580-10  2010-06-24 00:00:00  
+          11649           6780.0        12940  0296-07  2007-05-29 00:00:00  
+          11650           5410.0        11385  0319-10  2010-05-26 00:00:00  
+          11651           5618.0        11732  0416-13  2013-04-25 00:00:00  
+          11652           5510.0        11560  0853-11  2011-08-11 00:00:00  
+          11653           5377.0        12697  1125-14  2014-12-10 00:00:00  
+          11654              NaN         6300  0092-05  2005-04-07 00:00:00  
+          11655              NaN         9430  0137-08  2008-03-20 00:00:00  
+          11656              NaN         5595  0330-11  2014-05-24 00:00:00  
+          11657              NaN         4425  1126-14  2014-12-16 00:00:00  
+          11658              NaN         6274  0220-18  2018-04-17 00:00:00  
+          
+          [11659 rows x 11 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{collisions}\PY{p}{[}\PY{n}{collisions}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{street\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{01ST}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}19}]:}       report\_id            date\_time  police\_beat  street\_no street\_dir  \textbackslash{}
+         333      170494  2017-01-13 17:44:00          521          0              
+         1140     171430  2017-02-10 16:50:00          627       3600              
+         1169     171225  2017-02-11 22:04:00          627       3900              
+         1242     171362  2017-02-14 17:29:00          524       1100              
+         2390     172639  2017-03-27 13:01:00          529       2700              
+         2504     172647  2017-04-01 00:01:00          525        800              
+         2845     172959  2017-04-12 09:30:00          627       4000              
+         3223     173443  2017-04-27 00:01:00          524       1200              
+         3685     173712  2017-05-13 23:30:00          524       1000              
+         3736     173866  2017-05-16 10:35:00          526       1400              
+         3840     173892  2017-05-20 01:45:00          524       1100              
+         4413     174678  2017-06-09 14:13:00          524       1300              
+         4494     174571  2017-06-12 11:31:00          526          0              
+         4556     174593  2017-06-14 20:17:00          627          0              
+         4581     174828  2017-06-15 10:42:00          627          0              
+         4640     174868  2017-06-17 01:11:00          525          0              
+         5794     176011  2017-07-27 22:58:00          526          0              
+         5872     175944  2017-07-30 14:45:00          525        900              
+         6322     176373  2017-08-15 14:30:00          522        400              
+         6326     176622  2017-08-15 16:09:00          524       1000              
+         6715     177071  2017-08-29 15:56:00          522          0              
+         6750     177224  2017-08-30 18:35:00          524          0              
+         6881     177431  2017-09-03 23:20:00          524          0              
+         7179     177414  2017-09-14 16:50:00          627       3500              
+         7205     177525  2017-09-15 14:06:00          529          0              
+         7446     177451  2017-09-24 00:57:00          524          0              
+         8011     178311  2017-10-12 19:52:00          524          0              
+         8145     178374  2017-10-17 09:14:00          526       1600              
+         8383     178524  2017-10-25 16:29:00          627       3500              
+         9129     179252  2017-11-21 17:45:00          627       3900              
+         {\ldots}         {\ldots}                  {\ldots}          {\ldots}        {\ldots}        {\ldots}   
+         17091    187118  2018-09-15 21:45:00          526       1400              
+         17781    187792  2018-10-11 12:21:00          526       1600              
+         17846    187827  2018-10-13 07:25:00          529       1900              
+         17979    187982  2018-10-18 14:36:00          524       1100              
+         17981    188188  2018-10-18 15:00:00          526       1600              
+         18016    188025  2018-10-20 00:16:00          524       1300              
+         18028    187954  2018-10-20 08:57:00          529       2000              
+         18172    188219  2018-10-25 11:21:00          526       1400              
+         18294    188319  2018-10-29 01:39:00          526       1600              
+         18897    188867  2018-11-17 23:51:00          526       1500              
+         19012    189246  2018-11-21 21:27:00          525        800              
+         19269    190394  2018-12-01 22:45:00          529       1800              
+         19817    189805  2018-12-19 16:03:00          526       1400              
+         19824    189802  2018-12-19 22:00:00          627       3700              
+         20010    191170  2018-12-27 09:00:00          524       1000              
+         20370    190370  2019-01-10 15:56:00          627          0              
+         20423    190466  2019-01-12 11:55:00          526       1600              
+         20440    190399  2019-01-13 02:08:00          627       3500              
+         20718    190693  2019-01-23 15:30:00          524       1200              
+         20748  19200105  2019-01-24 19:53:00          526       1600              
+         20755    190712  2019-01-25 13:13:00          526       1600              
+         20991    190847  2019-02-03 10:30:00          627       3500              
+         21074  19200190  2019-02-06 11:16:00          529       2000              
+         21128  19200218  2019-02-08 13:06:00          526       1500              
+         21269  19200268  2019-02-14 14:16:00          524       1000              
+         21284  19200340  2019-02-15 03:10:00          526       1600              
+         21693    191504  2019-03-01 16:36:00          524       1100              
+         21931  19200495  2019-03-12 08:00:00          524       1000              
+         22660  19200813  2019-04-08 20:37:00          522        600              
+         22679  19011931  2019-04-10 21:26:09          524       1200              
+         
+               street\_name street\_type cross\_st\_dir cross\_st\_name cross\_st\_type  \textbackslash{}
+         333          01ST      AVENUE                     KALMIA        STREET   
+         1140         01ST      AVENUE                                            
+         1169         01ST      AVENUE                                            
+         1242         01ST      AVENUE                                            
+         2390         01ST      AVENUE                                            
+         2504         01ST      AVENUE                                            
+         2845         01ST      AVENUE                                            
+         3223         01ST      AVENUE                                            
+         3685         01ST      AVENUE                                            
+         3736         01ST      AVENUE                                            
+         3840         01ST      AVENUE                                            
+         4413         01ST      AVENUE                                            
+         4494         01ST      AVENUE            W         CEDAR        STREET   
+         4556         01ST      AVENUE            W    WASHINGTON        STREET   
+         4581         01ST      AVENUE                     WALNUT        AVENUE   
+         4640         01ST      AVENUE            W             E        STREET   
+         5794         01ST      AVENUE            W         CEDAR        STREET   
+         5872         01ST      AVENUE                                            
+         6322         01ST      AVENUE                                            
+         6326         01ST      AVENUE                                            
+         6715         01ST      AVENUE                     MARKET        STREET   
+         6750         01ST      AVENUE                        ASH        STREET   
+         6881         01ST      AVENUE                        ASH        STREET   
+         7179         01ST      AVENUE                                            
+         7205         01ST      AVENUE            W        LAUREL        STREET   
+         7446         01ST      AVENUE                        ASH        STREET   
+         8011         01ST      AVENUE            W             B        STREET   
+         8145         01ST      AVENUE                                            
+         8383         01ST      AVENUE                                            
+         9129         01ST      AVENUE                                            
+         {\ldots}           {\ldots}         {\ldots}          {\ldots}           {\ldots}           {\ldots}   
+         17091        01ST      AVENUE                                            
+         17781        01ST      AVENUE                                            
+         17846        01ST      AVENUE                                            
+         17979        01ST      AVENUE                                            
+         17981        01ST      AVENUE                                            
+         18016        01ST      AVENUE                                            
+         18028        01ST      AVENUE                                            
+         18172        01ST      AVENUE                                            
+         18294        01ST      AVENUE                                            
+         18897        01ST      AVENUE                                            
+         19012        01ST      AVENUE                                            
+         19269        01ST      AVENUE                                            
+         19817        01ST      AVENUE                                            
+         19824        01ST      AVENUE                                            
+         20010        01ST      AVENUE                                            
+         20370        01ST      AVENUE                  MONTECITO           WAY   
+         20423        01ST      AVENUE                                            
+         20440        01ST      AVENUE                                            
+         20718        01ST      AVENUE                                            
+         20748        01ST      AVENUE                                            
+         20755        01ST      AVENUE                                            
+         20991        01ST      AVENUE                                            
+         21074        01ST      AVENUE                                            
+         21128        01ST      AVENUE                                            
+         21269        01ST      AVENUE                                            
+         21284        01ST      AVENUE                                            
+         21693        01ST      AVENUE                                            
+         21931        01ST      AVENUE                                            
+         22660        01ST      AVENUE                                            
+         22679        01ST      AVENUE                                            
+         
+               violation\_section violation\_type  \textbackslash{}
+         333              21950A             VC   
+         1140              22107             VC   
+         1169           MISC-HAZ             VC   
+         1242           MISC-HAZ             VC   
+         2390              22107             VC   
+         2504           MISC-HAZ             VC   
+         2845              22106             VC   
+         3223           MISC-HAZ             VC   
+         3685              21703             VC   
+         3736              22107             VC   
+         3840              22107             VC   
+         4413              22106             VC   
+         4494             21658A             VC   
+         4556             21453A             VC   
+         4581              22450             VC   
+         4640              22107             VC   
+         5794              22107             VC   
+         5872              22106             VC   
+         6322           MISC-HAZ             VC   
+         6326           MISC-HAZ             VC   
+         6715             21453A             VC   
+         6750             21453A             VC   
+         6881             21453A             VC   
+         7179              22350             VC   
+         7205              21703             VC   
+         7446             21453A             VC   
+         8011             22100B             VC   
+         8145              22107             VC   
+         8383              22107             VC   
+         9129              21755             VC   
+         {\ldots}                 {\ldots}            {\ldots}   
+         17091             22106             VC   
+         17781             22107             VC   
+         17846             22107             VC   
+         17979          21235(G)             VC   
+         17981             22107             VC   
+         18016             22107             VC   
+         18028          MISC-HAZ             VC   
+         18172             22350             VC   
+         18294            21453A             VC   
+         18897            21453A             VC   
+         19012             22107             VC   
+         19269          MISC-HAZ             VC   
+         19817             22107             VC   
+         19824          MISC-HAZ             VC   
+         20010          MISC-HAZ             VC   
+         20370             22106             VC   
+         20423             22350             VC   
+         20440             22107             VC   
+         20718          MISC-HAZ             VC   
+         20748             22107             VC   
+         20755          MISC-HAZ             VC   
+         20991             22107             VC   
+         21074            21950A             VC   
+         21128            21453A             VC   
+         21269            21950A             VC   
+         21284             22106             VC   
+         21693          21235(G)             VC   
+         21931             22107             VC   
+         22660             22350             VC   
+         22679             22350             VC   
+         
+                                                      charge\_desc  injured  killed  \textbackslash{}
+         333                    YIELD RIGHT OF WAY TO PEDESTRIANS        2       0   
+         1140              TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         1169   MISCELLANEOUS HAZARDOUS VIOLATIONS OF THE VEHI{\ldots}        0       0   
+         1242   MISCELLANEOUS HAZARDOUS VIOLATIONS OF THE VEHI{\ldots}        0       0   
+         2390              TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         2504   MISCELLANEOUS HAZARDOUS VIOLATIONS OF THE VEHI{\ldots}        0       0   
+         2845                 STARTING PARKED VEHICLES OR BACKING        0       0   
+         3223   MISCELLANEOUS HAZARDOUS VIOLATIONS OF THE VEHI{\ldots}        0       0   
+         3685                               FOLLOWING TOO CLOSELY        0       0   
+         3736              TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         3840              TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         4413                 STARTING PARKED VEHICLES OR BACKING        1       0   
+         4494      LANED ROADWAYS - STRADDLING OR UNSAFE CHANGING        1       0   
+         4556              RED OR STOPVEHICLES STOP AT LIMIT LINE        1       0   
+         4581                                   STOP REQUIREMENTS        2       0   
+         4640              TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         5794              TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         5872                 STARTING PARKED VEHICLES OR BACKING        0       0   
+         6322   MISCELLANEOUS HAZARDOUS VIOLATIONS OF THE VEHI{\ldots}        0       0   
+         6326   MISCELLANEOUS HAZARDOUS VIOLATIONS OF THE VEHI{\ldots}        0       0   
+         6715              RED OR STOPVEHICLES STOP AT LIMIT LINE        1       0   
+         6750              RED OR STOPVEHICLES STOP AT LIMIT LINE        1       0   
+         6881              RED OR STOPVEHICLES STOP AT LIMIT LINE        2       0   
+         7179   VIOLATION OF BASIC SPEED LAW SPEED UNSAFE FOR {\ldots}        1       0   
+         7205                               FOLLOWING TOO CLOSELY        0       0   
+         7446              RED OR STOPVEHICLES STOP AT LIMIT LINE        1       0   
+         8011                         LEFT TURNS AT INTERSECTIONS        1       0   
+         8145              TURNING MOVEMENTS AND REQUIRED SIGNALS        1       0   
+         8383              TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         9129                            PASS ON THE RIGHT SAFELY        0       0   
+         {\ldots}                                                  {\ldots}      {\ldots}     {\ldots}   
+         17091                STARTING PARKED VEHICLES OR BACKING        0       0   
+         17781             TURNING MOVEMENTS AND REQUIRED SIGNALS        1       0   
+         17846             TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         17979          OPERATE MOTORIZED SCOOTER UPON A SIDEWALK        1       0   
+         17981             TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         18016             TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         18028  MISCELLANEOUS HAZARDOUS VIOLATIONS OF THE VEHI{\ldots}        0       0   
+         18172  VIOLATION OF BASIC SPEED LAW SPEED UNSAFE FOR {\ldots}        1       0   
+         18294             RED OR STOPVEHICLES STOP AT LIMIT LINE        1       0   
+         18897             RED OR STOPVEHICLES STOP AT LIMIT LINE        3       0   
+         19012             TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         19269  MISCELLANEOUS HAZARDOUS VIOLATIONS OF THE VEHI{\ldots}        0       0   
+         19817             TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         19824  MISCELLANEOUS HAZARDOUS VIOLATIONS OF THE VEHI{\ldots}        0       0   
+         20010  MISCELLANEOUS HAZARDOUS VIOLATIONS OF THE VEHI{\ldots}        0       0   
+         20370                STARTING PARKED VEHICLES OR BACKING        1       0   
+         20423  VIOLATION OF BASIC SPEED LAW SPEED UNSAFE FOR {\ldots}        2       0   
+         20440             TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         20718  MISCELLANEOUS HAZARDOUS VIOLATIONS OF THE VEHI{\ldots}        0       0   
+         20748        TURNS:UNSAFE TURN AND/OR NO TURN SIGNAL (I)        1       0   
+         20755  MISCELLANEOUS HAZARDOUS VIOLATIONS OF THE VEHI{\ldots}        1       0   
+         20991             TURNING MOVEMENTS AND REQUIRED SIGNALS        0       0   
+         21074  RIGHT-OF-WAY:DRVR YIELD TO PEDESTRIAN IN CROSS{\ldots}        1       0   
+         21128                     SIGNAL LIGHTS:CIRCULAR RED (I)        1       0   
+         21269  RIGHT-OF-WAY:DRVR YIELD TO PEDESTRIAN IN CROSS{\ldots}        1       0   
+         21284                            UNSAFE START ON HWY (I)        0       0   
+         21693          OPERATE MOTORIZED SCOOTER UPON A SIDEWALK        1       0   
+         21931        TURNS:UNSAFE TURN AND/OR NO TURN SIGNAL (I)        0       0   
+         22660                 UNSAFE SPEED (BASIC SPEED LAW) (I)        2       0   
+         22679                 UNSAFE SPEED (BASIC SPEED LAW) (I)        1       0   
+         
+                hit\_run\_lvl  
+         333            NaN  
+         1140   MISDEMEANOR  
+         1169   MISDEMEANOR  
+         1242           NaN  
+         2390           NaN  
+         2504   MISDEMEANOR  
+         2845   MISDEMEANOR  
+         3223   MISDEMEANOR  
+         3685   MISDEMEANOR  
+         3736   MISDEMEANOR  
+         3840           NaN  
+         4413           NaN  
+         4494           NaN  
+         4556           NaN  
+         4581           NaN  
+         4640           NaN  
+         5794           NaN  
+         5872           NaN  
+         6322   MISDEMEANOR  
+         6326           NaN  
+         6715           NaN  
+         6750           NaN  
+         6881           NaN  
+         7179           NaN  
+         7205           NaN  
+         7446   MISDEMEANOR  
+         8011           NaN  
+         8145           NaN  
+         8383           NaN  
+         9129           NaN  
+         {\ldots}            {\ldots}  
+         17091  MISDEMEANOR  
+         17781          NaN  
+         17846  MISDEMEANOR  
+         17979          NaN  
+         17981          NaN  
+         18016          NaN  
+         18028  MISDEMEANOR  
+         18172          NaN  
+         18294          NaN  
+         18897          NaN  
+         19012          NaN  
+         19269  MISDEMEANOR  
+         19817          NaN  
+         19824  MISDEMEANOR  
+         20010  MISDEMEANOR  
+         20370          NaN  
+         20423          NaN  
+         20440  MISDEMEANOR  
+         20718  MISDEMEANOR  
+         20748          NaN  
+         20755          NaN  
+         20991  MISDEMEANOR  
+         21074          NaN  
+         21128          NaN  
+         21269       FELONY  
+         21284  MISDEMEANOR  
+         21693          NaN  
+         21931  MISDEMEANOR  
+         22660          NaN  
+         22679          NaN  
+         
+         [84 rows x 16 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}136}]:} \PY{n}{collisions\PYZus{}cleaned} \PY{o}{=} \PY{n}{collisions}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{street\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{street\PYZus{}type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+          \PY{n}{collisions\PYZus{}cleaned}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}136}]:}    street\_name street\_type
+          0  CAM DEL ORO            
+          1  ROYAL GORGE       DRIVE
+          2     CRAWFORD      STREET
+          3      VALERIO       TRAIL
+          4         11TH      AVENUE
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}138}]:} \PY{n}{counts\PYZus{}cleaned} \PY{o}{=} \PY{n}{counts}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{street\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{total\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+          \PY{n}{counts\PYZus{}cleaned}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}138}]:}   street\_name  total\_count
+          0       01 AV        18010
+          1       01 AV        20060
+          2       01 AV        19597
+          3       01 AV         2298
+          4       01 AV        15625
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}89}]:} \PY{n}{full} \PY{o}{=} \PY{n}{collisions}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{street\PYZus{}type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}
+         \PY{n}{full}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}89}]:} array([' ', 'DRIVE', 'STREET', 'TRAIL', 'AVENUE', 'PLACE', 'COURT',
+                'ROAD', 'BOULEVARD', 'PARKWAY', 'WAY', 'COVE', 'CIRCLE', 'LANE',
+                'HIGHWAY', 'TERRACE', 'PLAZA', 'MALL', 'ROW', 'POINT', 'WALK',
+                'PASEO', 'SQUARE', 'RAMP', 'DRIVEWAY', 'KNOLLS', nan, 'LIGHTS'],
+               dtype=object)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}94}]:} \PY{n}{codes} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{counts\PYZus{}cleaned}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{street\PYZus{}name}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{:}
+             \PY{n}{temp} \PY{o}{=} \PY{n}{i}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}     for n in temp:}
+             \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{temp}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{:}
+                 \PY{n}{codes}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{temp}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+             \PY{k}{elif} \PY{n+nb}{len}\PY{p}{(}\PY{n}{temp}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{4} \PY{o+ow}{and} \PY{n}{temp}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o+ow}{in} \PY{n}{full}\PY{p}{:}
+                 \PY{n}{codes}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{temp}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}95}]:} \PY{n}{codes}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}95}]:} \{'AV',
+          'BL',
+          'CR',
+          'CT',
+          'DR',
+          'FE',
+          'GL',
+          'HY',
+          'LN',
+          'MALL',
+          'ML',
+          'PL',
+          'PT',
+          'PY',
+          'RD',
+          'ST',
+          'TL',
+          'TR',
+          'WY'\}
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}69}]:} \PY{n}{counts\PYZus{}cleaned}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{street\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{100}\PY{p}{:}\PY{l+m+mi}{1000}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}69}]:} array(['ASHLEY FALLS DR', 'ATHEY AV', 'ATLADENA AV', 'AUBURNDALE ST',
+                'AUTO CIRCLE ', 'AVATI DR', 'AVENIDA MAGNIFICA ', 'AVENIDA PLAYA ',
+                'AVENIDA PLAYA  ', 'AVENIDA RIO ', 'AVENIDA VENUSTO ',
+                'AVENIDA VISTAS ', 'AVENUE OF SCIENCE ', 'AVERNE ST', 'AVIARY  DR',
+                'AVIARY DR', 'AVIARY RD', 'AZUAGA ST', 'B  ST', 'B ST',
+                'BACHMAN PL', 'BACON ST', 'BAJA DR', 'BAKER ST', 'BALBOA ARMS DR',
+                'BALBOA AV', 'BALBOA DR', 'BALTIC ST', 'BALTIMORE DR',
+                'BANDY CYN RD', 'BARNES CYN RD', 'BARNETT AV', 'BATISTA ST',
+                'BAYARD ST', 'BAYVIEW HTS DR', 'BAYVIEW HTS WY', 'BEAGLE ST',
+                'BEAUMONT AV', 'BEECH ST', 'BELLEVUE AV', 'BERGER AV',
+                'BERNARDO CENTER DR', 'BERNARDO CTR DR', 'BERNARDO HTS PY',
+                'BERNARDO OAKS DR', 'BERYL ST', 'BEYER  BL', 'BEYER BL',
+                'BEYER WY', 'BIGNELL DR', 'BILLMAN ST', 'BIRCH BLUFF AV',
+                'BIRD ROCK AV', 'BIRMINGHAM WY', 'BISBY LAKE AV', 'BLACK MTN RD',
+                'BLUE CYPRESS DR', 'BLUFFSIDE AV', 'BONAIR ST', 'BOOTES ST',
+                'BOULDER LAKE AV', 'BOUNDARY ST', 'BOYD AV', 'BRANDYWINE ST',
+                'BRANDYWOOD ST', 'BRIARWOOD RD', 'BRITANNIA BL', 'BROADWAY ',
+                'BROADWAY CR', 'BROOKHAVEN DR', 'BROOKHAVEN RD', 'BUENOS AV',
+                'BURGENER BL', 'BUSINESSPARK AV', 'C ST', 'CABLE ST', 'CABOT DR',
+                'CABRILLO MEMORIAL DR', 'CACTUS RD', 'CALIENTE AV', 'CALLAN RD',
+                'CALLE CRISTOBAL ', 'CALLE DE LA PLATA ', 'CALLE DE LAS ROSAS ',
+                'CALLE ORO ', 'CALLE PRIMERA ', 'CALLE ROSAS ',
+                'CALLE TRES LOMAS ', 'CALUMET AV', 'CAM DEL NORTE ',
+                'CAM DEL RIO S ', 'CAM DEL SUR ', 'CAMINITO SANTALUZ SUR',
+                'CAMINO DE LA COSTA ', 'CAMINO DE LA PLAZA ',
+                'CAMINO DE LA REINA ', 'CAMINO DE LA REINA  ',
+                'CAMINO DE LA SIESTA ', 'CAMINO DEL ARROYO ', 'CAMINO DEL ESTE ',
+                'CAMINO DEL NORTE ', 'CAMINO DEL ORO ', 'CAMINO DEL RIO ',
+                'CAMINO DEL RIO N ', 'CAMINO DEL RIO S', 'CAMINO DEL RIO S ',
+                'CAMINO DEL RIO W', 'CAMINO DEL SUR ', 'CAMINO RICO ',
+                'CAMINO RUIZ ', 'CAMINO SANTA FE ', 'CAMINO SIESTA ',
+                'CAMIONES WY', 'CAMPANILE DR', 'CAMPHOR LN', 'CAMPUS AV',
+                'CAMPUS POINT CT', 'CAMPUS POINT DR', 'CAMPUS PT', 'CAMULOS ST',
+                'CANON ST', 'CAPRICORN WY', 'CARDENO DR', 'CARDIFF ST',
+                'CARDINAL DR', 'CARDINAL RD', 'CARGILL AV', 'CARMEL COUNTRY RD',
+                'CARMEL CREEK  RD', 'CARMEL CREEK RD', 'CARMEL GROVE RD',
+                'CARMEL KNOLLS  DR', 'CARMEL KNOLLS DR', 'CARMEL MOUNTAIN RD',
+                'CARMEL PARK  DR', 'CARMEL VALLEY RD', 'CARMEL VISTA RD',
+                'CARROLL CANYON RD', 'CARROLL RD', 'CARROLL WY', 'CASS ST',
+                'CASTANA ST', 'CATALINA BL', 'CATOCTIN DR', 'CEDAR ST',
+                'CELIA VISTA DR', 'CENTRAL AV', 'CESAR CHAVEZ PY', 'CHANDLER DR',
+                'CHARBONO ST', 'CHARGER BL', 'CHARMANT DR', 'CHATEAU DR',
+                'CHATSWORTH BL', 'CHELSEA AV', 'CHELSEA ST', 'CHEROKEE AV',
+                'CHESAPEAKE DR', "CHILDREN'S WY", 'CHOLLAS PY', 'CHOLLAS RD',
+                'CHURCHWARD ST', 'CIVITA BL', 'CLAIREMONT DR',
+                'CLAIREMONT MESA BL', 'CLEVELAND AV', 'CLIFFRIDGE AV',
+                'CLOUDCREST DR', 'CLOVERDALE RD', 'COAST BL', 'COLE ST',
+                'COLIMA ST', 'COLINA DORADO DR', 'COLLEGE AV', 'COLLEGE GROVE DR',
+                'COLLEGE GROVE WY', 'COLLURA ST', 'COLLWOOD BL', 'COLUMBIA ST',
+                'COMMERCE AV', 'COMMERCIAL ST', 'COMMON WEALTH AV',
+                'COMPASS PT (S) DR', 'COMSTOCK ST', 'CONESTOGA WY',
+                'CONFERENCE WY', 'CONGRESS ST', 'CONVOY  CT', 'CONVOY CT',
+                'CONVOY ST', 'COPLEY DR', 'COPLEY PARK PL', 'CORDOVA ST',
+                'CORONADO AV', 'CORONADO BRIDGE ', 'COTTONWOOD RD',
+                'COUNTRY CLUB DR', 'COWLES MOUNTAIN  BL', 'COWLES MTN BL',
+                'COWLEY WY', 'CRANDALL DR', 'CRAWFORD ST', 'CREEKVIEW DR',
+                'CROWN POINT DR', 'CRYSTALAIRE DR', 'CUMBERLAND ST', 'CURLEW ST',
+                'CYPRESS CANYON PARK DR', 'CYPRESS CANYON RD', 'DAGGET ST',
+                'DAIRY MART RD', 'DALEY CTR DR', 'DAMON AV', 'DANA LANDING RD',
+                'DATE ST', 'DATSUN ST', 'DAWES ST', 'DECORO ST', 'DEEP DELL RD',
+                'DEL CERRO BL', 'DEL DIABLO WY', 'DEL MAR AV',
+                'DEL MAR HEIGHTS RD', 'DEL MAR HTS RD', 'DEL MAR MESA RD',
+                'DEL MAR SCENIC PY', 'DEL MAR TRAILS RD', 'DEL SOL BL',
+                'DEL SUR BL', 'DELTA ST', 'DENNERY RD', 'DENVER ST', 'DERRICK DR',
+                'DIAMOND ST', 'DIANE AV', 'DISTRIBUTION AV', 'DIVISION ST',
+                'DOLIVA DR', 'DORIANA ST', 'DORMOUSE RD', 'DOWDY DR', 'DUENDA RD',
+                'DUNAWAY DR', 'DUSK DR', 'E BEYER BL', 'E CAMPUS DR',
+                'E MISSION BAY  DR', 'E MISSION BAY DR', 'E OCEAN AIR  DR',
+                'E OCEAN AIR DR', 'E ST', 'EASTBOURNE RD', 'EASTGATE MALL ',
+                'EASTGATE ML', 'EBERS ST', 'ECKSTROM AV', 'EL CAJON BL',
+                'EL CAMINO REAL ', 'EL PASEO GRANDE ', 'EL PRADO ', 'ELM AV',
+                'ELM ST', 'ENGINEER RD', 'ENRICO FERMI DR', 'ENTERPRISE ST',
+                'ESCALA DR', 'ESSEX ST', 'EUCLID AV', 'EVENING CREEK DR',
+                'EVENING CREEK DR N', 'EXECUTIVE DR', 'EXECUTIVE WY', 'F ST',
+                'FAIRBROOK RD', 'FAIRMOUNT AV', 'FAMOSA BL', 'FANUEL ST',
+                'FARMINGDALE ST', 'FASHION VALLEY RD', 'FATHER JUNIPERO SERRA TL',
+                'FAY AV', 'FEDERAL BL', 'FELSPAR ST', 'FERN GL', 'FERN ST',
+                'FIELD ST', 'FIESTA ISLAND RD', 'FLANDERS DR', 'FLORIDA AV',
+                'FLORIDA DR', 'FLORIDA ST', 'FONTAINE ST', 'FOOTHILL BL',
+                'FORT STOCKTON DR', 'FORWARD ST', 'FRANKLIN RIDGE RD', 'FRAZEE RD',
+                'FRIARS  RD', 'FRIARS RD', 'FRONT  ST', 'FRONT ST', 'FROST MAR PL',
+                'FROST ST', 'G ST', 'GALVIN AV', 'GARNET AV', 'GARRISON ST',
+                'GATEWAY CTR DR', 'GATEWAY DR', 'GEMINI  AV', 'GEMINI AV',
+                'GENESEE AV', 'GENTER ST', 'GEORGE COOKE EXPRESS DR',
+                'GEORGIA ST BRIDGE ', 'GESNER ST', 'GILMAN DR', 'GIRARD AV',
+                'GLENROY ST', 'GOLD COAST DR', 'GOLDFINCH ST', 'GOLF COURSE DR',
+                'GOLFCREST DR', 'GOODE ST', 'GOVERNOR DR', 'GRAMERCY DR',
+                'GRAND AV', 'GRANDEE PL', 'GRAPE ST', 'GRAYDON RD',
+                'GREENBRIER AV', 'GREENFORD DR', 'GREYLING DR', 'GROVE AV',
+                'GULLSTRAND ST', 'HAINES ST', 'HALF MILE DR', 'HAMMOND DR',
+                'HANCOCK ST', 'HANCOOK ST', 'HARBISON AV', 'HARBOR DR',
+                'HARBOR ISLAND DR', 'HARFIELD AV', 'HARNEY ST', 'HARTFIELD AV',
+                'HARVEST RD', 'HATHAWAY ST', 'HAWK ST', 'HAWTHORN ST',
+                'HAZARD CTR DR', 'HEALTH CTR DR', 'HEINRICH HERTZ DR',
+                'HERITAGE RD', 'HERMES ST', 'HERSCHEL AV', 'HIBERT ST',
+                'HICKMAN FIELD DR', 'HIDDEN VY RD', 'HIGH BLUFF DR',
+                'HIGH BLUFF RD', 'HIGHLAND RH RD', 'HIGHLAND VALLEY RD',
+                'HIGHWOOD DR', 'HILL ST', 'HILLERY DR', 'HILLSIDE DR',
+                'HILLTOP DR', 'HOLIDAY CT', 'HOLLISTER ST', 'HOLLY DR', 'HOME AV',
+                'HOTEL CIRCLE N ', 'HOTEL CIRCLE S ', 'HOWARD AV', 'HUGHES ST',
+                'HUGO ST', 'HYACINTH DR', 'I-15 NB RAMP 1 ', 'I-15 NB RAMP 2 ',
+                'IDLEWILD WY', 'ILLION ST', 'IMPERIAL AV', 'INDIA ST',
+                'INGRAGAM ST', 'INGRAHAM ST', 'INGULF ST', 'INNOVATION DR',
+                'IRIS AV', 'IRON WOOD RD', 'ISLAND AV', 'IVANHOE AV',
+                'J J MONTGOMERY DR', 'JACKSON DR', 'JACKSON ST', 'JADE COAST DR',
+                'JADE COAST RD', 'JAMACHA RD', 'JEFFERSON ST', 'JEWELL ST',
+                'JOHN J HOPKINS DR', 'JOHN J MONTGOMERY DR', 'JUAN ST',
+                'JUNIPER ST', 'JUTLAND DR', 'K ST', 'KEARNEY AV',
+                'KEARNEY VILLA RD', 'KEARNY MESA RD', 'KEARNY MISSION RD',
+                'KEARNY VILLA  RD', 'KEARNY VILLA RD', 'KELTON RD', 'KEMPER ST',
+                'KENAMAR DR', 'KENWOOD ST', 'KETTNER BL', 'KIOWA DR', 'KITE ST',
+                'KLAUBER AV', 'KNOXVILLE ST', 'KRENNING ST', 'KURTZ ST',
+                'LA CANADA ST', 'LA CUENTA DR', 'LA JOLLA BL',
+                'LA JOLLA COLONY DR', 'LA JOLLA HERMOSA AV', 'LA JOLLA MESA DR',
+                'LA JOLLA PY', 'LA JOLLA SCENIC DR', 'LA JOLLA SCENIC S  DR',
+                'LA JOLLA SHORES DR', 'LA JOLLA VILLAGE DR', 'LA JOLLA VILLAGE PY',
+                'LA MEDIA RD', 'LA PLAYA AV', 'LAKE ARROWHEAD DR',
+                'LAKE MURRAY BL', 'LAKE SHORE DR', 'LAMONT ST', 'LANCE ST',
+                'LANDIS ST', 'LANDSCAPE DR', 'LANSDALE DR', 'LAS FLORES TR',
+                'LAUREL ST', 'LAZANJA DR', 'LEA ST', 'LEBON DR', 'LELAND ST',
+                'LEON AV', 'LEWIS ST', 'LEWISON DR', 'LIBRA DR', 'LIGHTWAVE AV',
+                'LIMERICK AV', 'LINCOLN  AV', 'LINCOLN AV', 'LINDA ROSA AV',
+                'LINDA VISTA RD', 'LIPMANN ST', 'LISBON ST', 'LIVINGSTON ST',
+                'LOFTY TRAIL DR', 'LOGAN AV', 'LOMALAND DR', 'LOMICA DR',
+                'LONE QUAIL RD', 'LONG RUN DR', 'LONGFORD ST', 'LOOKOUT DR',
+                'LORING ST', 'LOTUS DR', 'LOWELL ST', 'LUNA AV', 'LUSK BL',
+                'LYTTON ST', 'MACAULAY ST', 'MADERA ST', 'MADISON AV', 'MADRA AV',
+                'MAGNOLIA AV', 'MAHAILA AV', 'MAIN SB ST', 'MAIN ST', 'MALLARD ST',
+                'MANGO DR', 'MANZANA WY', 'MARGERUM  AV', 'MARGERUM AV',
+                'MARKET ST', 'MARLBOROUGH AV', 'MARLBOROUGH DR', 'MARLESTA DR',
+                'MARYLAND ST', 'MAST BL', 'MATINAL DR', 'MATINAL RD', 'MATURIN DR',
+                'MAYA LINDA RD', 'MCGUIRE DR', 'MCGUIRE RD', 'MEADE AV',
+                'MEADOW LARK DR', 'MEADOWBROOK  DR', 'MEADOWBROOK DR',
+                'MERCURY ST', 'MERCY RD', 'MERLIN DR', 'MERRIMAC AV',
+                'MESA COLLEGE DR', 'METROPOLITAN DR', 'MIDVALE DR', 'MIDWAY DR',
+                'MIDWAY ST', 'MILCH RD', 'MILTON ST', 'MIRA MESA BL',
+                'MIRA SORRENTO PL', 'MIRALANI DR', 'MIRAMAR PL', 'MIRAMAR RD',
+                'MIRAMAR WY', 'MISSION AV', 'MISSION BAY DR', 'MISSION BL',
+                'MISSION CENTER RD', 'MISSION CITY PY', 'MISSION GORGE PL',
+                'MISSION GORGE RD', 'MISSION VILLAGE DR', 'MISSION VILLAGE RD',
+                'MISSISSIPPI ST', 'MITCHER WY', 'MOBLEY ST', 'MOCKING BIRD DR',
+                'MONROE AV', 'MONTE VISTA AV', 'MONTEZUMA RD', 'MONTONGO ST',
+                'MONUMENT RD', 'MOORE ST', 'MORAGA AV', 'MOREHOUSE DR',
+                'MORENA  BL', 'MORENA BL', 'MORENA BL ', 'MORLEY FIELD DR',
+                'MORNING CRK N DR', 'MORNING CRK S DR', 'MORRELL ST',
+                'MT ABERNATHY AV', 'MT ACADIA BL', 'MT AGUILAR DR', 'MT ALIFAN DR',
+                'MT ARARAT DR', 'MT ETNA DR', 'MT EVEREST BL', 'MT HERBERT AV',
+                'MT VIEW DR', 'MUIRLANDS DR', 'MUIRLANDS VISTA WY', 'MUNDA RD',
+                'MURPHY CYN RD', 'MURRAY CYN RD', 'MURRAY PARK DR',
+                'MURRAY RIDGE RD', 'N EVENING CREEK DR', 'N HARBOR DR',
+                'N MISSION BAY DR', 'N MOUNTAIN VIEW DR', 'N PARK WY',
+                'N TORREY PINES RD', 'NANCY RIDGE DR', 'NAPA ST', 'NARANJA ST',
+                'NARRAGANSETT AV', 'NATIONAL  AV', 'NATIONAL AV', 'NAUTILUS  ST',
+                'NAUTILUS ST', 'NAVAJO RD', 'NEW SALEM ST', 'NEWPORT AV',
+                'NIAGARA AV', 'NILE ST', 'NIMITZ BL', 'NOBEL DR', 'NOELL ST',
+                'NORMAL ST', 'NORMAN SCOTT RD', 'NORSTAD AV', 'NORTH PARK WY',
+                'NORTHSIDE DR', 'OAKRIDGE RD', 'OBERLIN DR', 'OCEAN VIEW BL',
+                'OCEAN VIEW HILLS PY', 'OCEAN VIEW PY', 'OHIO ST',
+                'OLD CARMEL VY RD', 'OLD EL CAMINO REAL ', 'OLD EL CAMINO REAL  ',
+                'OLD MEMORY LN', 'OLD MILKY WY', 'OLD SAN PASCUAL RD',
+                'OLD TOWN AV', 'OLIVE AV', 'OLIVETAS AV', 'OLNEY ST', 'OLVERA AV',
+                'ORANGE AV', 'ORCHARD AV', 'ORCUTT AV', 'ORO VISTA RD',
+                'OSBORNE ST', 'OSLER ST', 'OTAY CENTER DR', 'OTAY CENTER RD',
+                'OTAY MESA RD', 'OTAY VALLEY RD', 'OTHELLO AV', 'OUTER RD',
+                'OVIEDO ST', 'PACIFIC BEACH DR', 'PACIFIC CENTER BL', 'PACIFIC DR',
+                'PACIFIC HIGHLANDS RH PY', 'PACIFIC HIGHWAY VIADUCT ',
+                'PACIFIC HTS BL', 'PACIFIC HY', 'PACIFIC MESA BL', 'PACIFICA DR',
+                'PALM AV', 'PALM ST', 'PALMILLA DR', 'PALOMAR AV',
+                'PARADISE HILLS RD', 'PARADISE VALLEY RD', 'PARK BL',
+                'PARK RIDGE BL', 'PARK VILLAGE RD', 'PARKDALE AV', 'PARKSIDE AV',
+                'PASEO AMERICAS ', 'PASEO CARDIEL ', 'PASEO DE LAS AMERICAS ',
+                'PASEO DEL VERANO ', 'PASEO DORADO ', 'PASEO LUCIDO ',
+                'PASEO MONTALBAN ', 'PASEO MONTANOSO ', 'PASEO MONTRIL ',
+                'PASEO SUR ', 'PASEO SUR  ', 'PASEO VERANO ', 'PEARL ST',
+                'PEGASUS AV', 'PENASQUITOS DR', 'PENNANT WY', 'PENNSYLVANIA AV',
+                'PEREZ COVE PRIVATE WY', 'PERSHING DR', 'PESCADERO AV', 'PETIT ST',
+                'PHYLLIS PL', 'PICADOR BL', 'PICCARD AV', 'PICO ST',
+                'PINECREST AV', 'PLAZA BL', 'PLAZA DE PANAMA ', 'PLUM ST',
+                'POBLADO RD', 'POINSETTIA DR', 'POINT LOMA AV', 'POINT LOMA AV ',
+                'POINT LOMA BL', 'POMERADO RD', 'POPLAR ST', 'PORTOBELO DR',
+                'PORTOFINO DR', 'POTOMAC ST', 'POWAY RD', 'PRESIDENTS WY',
+                'PRESIDIO DR', 'PRESTWICK DR', 'PRINCESS ST', 'PRINCESS VIEW DR',
+                'PRODUCTION AV', 'PROSPECT PL', 'PROSPECT ST', 'QUALCOMM WY',
+                'QUARTER MILE DR', 'QUINCY ST', 'QUIVIRA RD', 'QUIVIRA WY',
+                'RACINE RD', 'RAEJEAN AV', 'RANCHO BERNARDO RD',
+                'RANCHO CARMEL DR', 'RANCHO HILLS DR', 'RANCHO MISSION RD',
+                'RANCHO PENASQUITOS BL', 'RAY ST', 'RAYTHEON RD', 'REAGAN RD',
+                'REAJEAN AV', 'RED CEDAR DR', 'REDWOOD ST', 'REED AV',
+                'REGENTS RD', 'REO DR', 'RESERVOIR DR', 'REYNARD WY',
+                'RICHLAND ST', 'RICHMOND ST', 'RIDGE MANOR AV', 'RIO SAN DIEGO DR',
+                'RIOS RD', 'RIVERDALE ST', 'RIVIERA DR', 'ROBBINS ST',
+                'ROBINSON AV', 'ROCKWOOD RD', 'ROLANDO BL', 'ROLFE RD', 'ROLL DR',
+                'ROMERO DR', 'RONSON RD', 'ROSECRANS ST', 'ROSELLE ST',
+                'ROSWELL ST', 'RTE 252 ', 'RUE CHAMBERRY ', 'RUEDA DR',
+                'RUFFIN CT', 'RUFFIN RD', 'RUFFNER ST', 'RUSS BL',
+                'S EVENING CREEK DR', 'SABRE SPRINGS PY', 'SAIPAN DR',
+                'SALMON RIVER RD', 'SAMPSON ST', 'SAN ANDRES DR', 'SAN CARLOS DR',
+                'SAN DIEGO AV', 'SAN DIEGO MISSION RD', 'SAN DIEGUITO BL',
+                'SAN DIEGUITO RD', 'SAN JACINTO DR', 'SAN PASQUAL RD',
+                'SAN PASQUAL ST', 'SAN PASQUAL VY RD', 'SAN VICENTE ST',
+                'SAN YSIDRO BL', 'SANDROCK RD', 'SANTA BARBARA ST', 'SANTA FE ST',
+                'SANTA MONICA AV', 'SANTO RD', 'SANYO AV', 'SASSAFRAS ST',
+                'SATELLITE BL', 'SATURN  BL', 'SATURN BL', 'SCHLEY ST',
+                'SCIENCE PARK RD', 'SCOTT ST', 'SCRANTON RD', 'SCRIPPS CREEK DR',
+                'SCRIPPS HIGHLANDS DR', 'SCRIPPS LAKE DR', 'SCRIPPS POWAY PY',
+                'SCRIPPS RANCH  BL', 'SCRIPPS RANCH BL', 'SCRIPPS TL', 'SD 078 ',
+                'SD 905 ', 'SEA WORLD DR', 'SEA WORLD WY', 'SEMILLON BL',
+                'SHAWLINE ST', 'SHAWNEE RD', 'SHELTER ISLAND DR', 'SHERMAN ST',
+                'SHOAL CREEK DR', 'SIEMPRE VIVA RD', 'SILVERADO ST',
+                'SILVERTON AV', 'SKYLINE DR', 'SMYTHE AV', 'SODERBLOM AV',
+                'SOLEDAD AV', 'SOLEDAD MOUNTAIN RD', 'SOLEDAD MTN RD',
+                'SOLEDAD RD', 'SORRENTO VY BL', 'SORRENTO VY RD', 'SPARREN AV',
+                'SPECTRUM CT', 'SPORTS ARENA BL', 'SPRING CYN RD',
+                'SPRINGBROOK DR', 'SPRINGHURST DR', 'SPRUCE RUN  DR',
+                'SPRUCE RUN DR', 'SPRUCE ST', 'STALMER ST', 'STARLING DR',
+                'STATE ST', 'STONEBRIDGE PY', 'STONECREST BL', 'STONEY PEAK DR',
+                'STREAMVIEW DR', 'STRESEMANN ST', 'SUNDEVIL WY', 'SUNSET BL',
+                'SUNSET CLIFFS BL', 'SUNSET RD', 'SUNSET RIDGE DR', 'SUTTER ST',
+                'SWIFT AV', 'SYCHAR RD', 'TAIT ST', 'TALBOT ST', 'TAYLOR ST',
+                'TECH WY', 'TECOLOTE RD', 'TED WILLIAMS PY', 'TENNYSON ST',
+                'TEXAS ST', 'THERMAL AV', 'THOMAS AV', 'THORN ST',
+                'TIERRASANTA BL', 'TIMBERLAKE DR', 'TOCAYO AV', 'TONAWANDA DR',
+                'TOOMA ST', 'TOP GUN ST', 'TORREY BLUFF DR', 'TORREY MEADOWS DR',
+                'TORREY PINES RD', 'TORREY SANTA FE RD', 'TORRINGTON ST',
+                'TOWNE CTRE DR', 'TOWNSGATE DR', 'TRADE PL', 'TRADE ST',
+                'TREENA ST', 'TRIANA ST', 'TRINIDAD WY', 'TROJAN AV', 'TULIP ST',
+                'TURQUOISE ST', 'TWAIN AV', 'TWIGGS ST', 'TWIN TRAILS DR',
+                'TWINING AV', 'ULRIC ST', 'UNIVERSITY AV', 'UPAS ST', 'UTAH ST',
+                'UTE DR', 'VALENCIA PY', 'VALETA ST', 'VALLEY CENTRE DR',
+                'VALLEY RD', 'VAN DYKE AV', 'VANDEVER AV', 'VENTURA PL',
+                'VERMONT ST', 'VESTA ST', 'VETERANS HOSPITAL DR', 'VIA ALICANTE ',
+                'VIA ALTA ', 'VIA AMISTAD ', 'VIA CAMPO ', 'VIA CAPRI ',
+                'VIA CUMBRES ', 'VIA DE LA VALLE ', 'VIA GRANDE DR',
+                'VIA MALLORCA ', 'VIA MALLORCA  ', 'VIA SAN YSIDRO ',
+                'VIA VALARTA ', 'VIA VALLE ', 'VICKERS ST', 'VIEWRIDGE AV',
+                'VIKING WY', 'VILLA LA JOLLA DR', 'VILLAGE PL', 'VIRGINIA WY',
+                'VISTA GRANDE DR', 'VISTA HILL AV', 'VISTA SORRENTO PY',
+                'VOLTAIRE ST'], dtype=object)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}139}]:} \PY{n}{collisions\PYZus{}cleaned}\PY{p}{[}\PY{n}{collisions\PYZus{}cleaned}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{street\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{str}\PY{o}{.}\PY{n}{contains}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AV}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}139}]:}                 street\_name street\_type
+          109                  AVIARY       DRIVE
+          196                  DEAVER        LANE
+          425                BAVARIAN         WAY
+          459                  NAVAJO        ROAD
+          529           AVNDA VENUSTO            
+          552         AVENIDA VILLAHA            
+          590                  NAVAJO        ROAD
+          653          CESAR E CHAVEZ     PARKWAY
+          694          AVNDA DEL GATO            
+          703                  NAVAJO        ROAD
+          844                  NAVAJO        ROAD
+          1009   AVENIDA PLAYA VERACR            
+          1066                 NAVAJO        ROAD
+          1115         CESAR E CHAVEZ     PARKWAY
+          1186        ZASLAVSKY PLACE            
+          1740       AVNDA DEL MEXICO            
+          2044        AVNDA MAGNIFICA            
+          2213         CESAR E CHAVEZ     PARKWAY
+          2227                  RAVEN      STREET
+          2383                  RAVEN      STREET
+          2613           CALLE PAVANA            
+          2616         AVNDA DEL GATO            
+          2618         AVNDA DEL GATO            
+          2986                 NAVAJO        ROAD
+          3303                  RAVEN      STREET
+          3436                 NAVAJO        ROAD
+          3483          AVNDA VENUSTO            
+          3568                 NAVAJO        ROAD
+          3666                  AVATI       DRIVE
+          3790                 AVIARY       DRIVE
+          {\ldots}                     {\ldots}         {\ldots}
+          19092        CESAR E CHAVEZ     PARKWAY
+          19166                NAVAJO        ROAD
+          19223            BROOKHAVEN        ROAD
+          19651                NAVAJO        ROAD
+          19714        CESAR E CHAVEZ     PARKWAY
+          19738                NAVAJO        ROAD
+          19807                AVERIL        ROAD
+          19878      PLAZA CUERNAVACA            
+          19973                NAVAJO        ROAD
+          19998    AVNDA DE LA MADRID            
+          20000              HAVETEUR         WAY
+          20006       AVNDA MAGNIFICA            
+          20287                AVERIL        ROAD
+          20350      AVNDA DEL MEXICO            
+          20461     AVNDA COSTA NORTE            
+          20544        CESAR E CHAVEZ     PARKWAY
+          20795            BROOKHAVEN        ROAD
+          21255        AVNDA DEL GATO            
+          21256    AVNDA DE LA FUENTE            
+          21438                NAVAJO        ROAD
+          21471             11TH AVET            
+          21481        CESAR E CHAVEZ     PARKWAY
+          21598            BROOKHAVEN        ROAD
+          21647       AVENIDA DEL RIO            
+          21726                NAVAJO        ROAD
+          21967            RIDGEHAVEN       COURT
+          22258                 AVENA       PLACE
+          22512                NAVAJO        ROAD
+          22520    AVNDA DE LA FUENTE            
+          22675       AVNDA MAGNIFICA            
+          
+          [182 rows x 2 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}187}]:} \PY{n}{brief\PYZus{}to\PYZus{}full} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AV}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AVENUE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BOULEVARD}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CR}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CIRCLE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CT}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{COURT}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DR}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DRIVE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HY}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HIGHWAY}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LANE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                           \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ML}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MALL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PLACE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PY}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PARKWAY}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PT}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{POINT}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RD}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ROAD}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ST}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{STREET}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TRAIL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TR}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TERRACE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{WY}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{WAY}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{null}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{np}\PY{o}{.}\PY{n}{nan}\PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}188}]:} \PY{n}{street\PYZus{}type} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n}{counts\PYZus{}cleaned}\PY{o}{.}\PY{n}{iterrows}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+              \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{row}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{2} \PY{o+ow}{and} \PY{n}{row}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o+ow}{in} \PY{n}{brief\PYZus{}to\PYZus{}full}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{temp} \PY{o}{=} \PY{n}{row}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+                  \PY{n}{street\PYZus{}type}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{temp}\PY{p}{)}
+              \PY{k}{else}\PY{p}{:}
+                  \PY{n}{street\PYZus{}type}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{null}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{street\PYZus{}type}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}188}]:} ['AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'AV',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           'ST',
+           {\ldots}]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}189}]:} \PY{n}{counts\PYZus{}cleaned}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{street\PYZus{}type\PYZus{}abb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{street\PYZus{}type}
+          \PY{n}{counts\PYZus{}cleaned}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}QYK\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:1: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row\_indexer,col\_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html\#indexing-view-versus-copy
+  """Entry point for launching an IPython kernel.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}189}]:}           street\_name  total\_count street\_type\_abb street\_type
+          0               01 AV        18010              AV      AVENUE
+          1               01 AV        20060              AV      AVENUE
+          2               01 AV        19597              AV      AVENUE
+          3               01 AV         2298              AV      AVENUE
+          4               01 AV        15625              AV      AVENUE
+          5               01 AV        13569              AV      AVENUE
+          6               01 AV        13389              AV      AVENUE
+          7               01 AV        13995              AV      AVENUE
+          8               01 AV        27450              AV      AVENUE
+          9               01 AV        22345              AV      AVENUE
+          10              01 AV        18742              AV      AVENUE
+          11              01 AV        24463              AV      AVENUE
+          12              01 AV        25715              AV      AVENUE
+          13              01 AV        10410              AV      AVENUE
+          14              01 AV        12905              AV      AVENUE
+          15              01 AV        11278              AV      AVENUE
+          16              01 AV         3920              AV      AVENUE
+          17              01 AV         3285              AV      AVENUE
+          18              01 AV         3414              AV      AVENUE
+          19              01 AV         3419              AV      AVENUE
+          20              01 AV         3477              AV      AVENUE
+          21              01 AV         3474              AV      AVENUE
+          22              01 AV        11148              AV      AVENUE
+          23              01 AV        11421              AV      AVENUE
+          24              01 AV        10003              AV      AVENUE
+          25              01 AV        10774              AV      AVENUE
+          26              01 AV         3820              AV      AVENUE
+          27              01 AV         4068              AV      AVENUE
+          28              01 AV         3552              AV      AVENUE
+          29              01 AV         3355              AV      AVENUE
+          {\ldots}               {\ldots}          {\ldots}             {\ldots}         {\ldots}
+          11629  WORLD TRADE DR         7770              DR       DRIVE
+          11630  WORLD TRADE DR         9480              DR       DRIVE
+          11631  WORLD TRADE DR         8176              DR       DRIVE
+          11632  WORLD TRADE DR         7300              DR       DRIVE
+          11633  WORLD TRADE DR        10214              DR       DRIVE
+          11634  WORLD TRADE DR         8260              DR       DRIVE
+          11635  WORLD TRADE DR         9145              DR       DRIVE
+          11636  WORLD TRADE DR         8223              DR       DRIVE
+          11637  WORLD TRADE DR         9537              DR       DRIVE
+          11638  WORLD TRADE DR         4880              DR       DRIVE
+          11639  WORLD TRADE DR         5805              DR       DRIVE
+          11640  WORLD TRADE DR         5179              DR       DRIVE
+          11641  WORLD TRADE DR         7890              DR       DRIVE
+          11642       WORSCH DR         1409              DR       DRIVE
+          11643       WORSCH DR         1696              DR       DRIVE
+          11644       WORSCH DR         1431              DR       DRIVE
+          11645    WYNDHAVEN DR          543              DR       DRIVE
+          11646  YERBA SANTA DR         2290              DR       DRIVE
+          11647   YSABEL CRK RD          605              RD        ROAD
+          11648         ZION AV        10890              AV      AVENUE
+          11649         ZION AV        12940              AV      AVENUE
+          11650         ZION AV        11385              AV      AVENUE
+          11651         ZION AV        11732              AV      AVENUE
+          11652         ZION AV        11560              AV      AVENUE
+          11653         ZION AV        12697              AV      AVENUE
+          11654          ZOO PL         6300              PL       PLACE
+          11655          ZOO PL         9430              PL       PLACE
+          11656          ZOO PL         5595              PL       PLACE
+          11657          ZOO PL         4425              PL       PLACE
+          11658          ZOO PL         6274              PL       PLACE
+          
+          [11659 rows x 4 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}190}]:} \PY{n}{counts\PYZus{}cleaned}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{street\PYZus{}type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{n}{brief\PYZus{}to\PYZus{}full}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n}{counts\PYZus{}cleaned}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{street\PYZus{}type\PYZus{}abb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+          \PY{n}{counts\PYZus{}cleaned}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{street\PYZus{}type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}QYK\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:1: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row\_indexer,col\_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html\#indexing-view-versus-copy
+  """Entry point for launching an IPython kernel.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}190}]:} 0        AVENUE
+          1        AVENUE
+          2        AVENUE
+          3        AVENUE
+          4        AVENUE
+          5        AVENUE
+          6        AVENUE
+          7        AVENUE
+          8        AVENUE
+          9        AVENUE
+          10       AVENUE
+          11       AVENUE
+          12       AVENUE
+          13       AVENUE
+          14       AVENUE
+          15       AVENUE
+          16       AVENUE
+          17       AVENUE
+          18       AVENUE
+          19       AVENUE
+          20       AVENUE
+          21       AVENUE
+          22       AVENUE
+          23       AVENUE
+          24       AVENUE
+          25       AVENUE
+          26       AVENUE
+          27       AVENUE
+          28       AVENUE
+          29       AVENUE
+                    {\ldots}  
+          11629     DRIVE
+          11630     DRIVE
+          11631     DRIVE
+          11632     DRIVE
+          11633     DRIVE
+          11634     DRIVE
+          11635     DRIVE
+          11636     DRIVE
+          11637     DRIVE
+          11638     DRIVE
+          11639     DRIVE
+          11640     DRIVE
+          11641     DRIVE
+          11642     DRIVE
+          11643     DRIVE
+          11644     DRIVE
+          11645     DRIVE
+          11646     DRIVE
+          11647      ROAD
+          11648    AVENUE
+          11649    AVENUE
+          11650    AVENUE
+          11651    AVENUE
+          11652    AVENUE
+          11653    AVENUE
+          11654     PLACE
+          11655     PLACE
+          11656     PLACE
+          11657     PLACE
+          11658     PLACE
+          Name: street\_type, Length: 11659, dtype: object
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}192}]:} \PY{n}{counts\PYZus{}cleaned}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{n}{subset}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{street\PYZus{}type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}QYK\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:1: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html\#indexing-view-versus-copy
+  """Entry point for launching an IPython kernel.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}193}]:} \PY{n}{counts\PYZus{}cleaned}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}193}]:}           street\_name  total\_count street\_type\_abb street\_type
+          0               01 AV        18010              AV      AVENUE
+          1               01 AV        20060              AV      AVENUE
+          2               01 AV        19597              AV      AVENUE
+          3               01 AV         2298              AV      AVENUE
+          4               01 AV        15625              AV      AVENUE
+          5               01 AV        13569              AV      AVENUE
+          6               01 AV        13389              AV      AVENUE
+          7               01 AV        13995              AV      AVENUE
+          8               01 AV        27450              AV      AVENUE
+          9               01 AV        22345              AV      AVENUE
+          10              01 AV        18742              AV      AVENUE
+          11              01 AV        24463              AV      AVENUE
+          12              01 AV        25715              AV      AVENUE
+          13              01 AV        10410              AV      AVENUE
+          14              01 AV        12905              AV      AVENUE
+          15              01 AV        11278              AV      AVENUE
+          16              01 AV         3920              AV      AVENUE
+          17              01 AV         3285              AV      AVENUE
+          18              01 AV         3414              AV      AVENUE
+          19              01 AV         3419              AV      AVENUE
+          20              01 AV         3477              AV      AVENUE
+          21              01 AV         3474              AV      AVENUE
+          22              01 AV        11148              AV      AVENUE
+          23              01 AV        11421              AV      AVENUE
+          24              01 AV        10003              AV      AVENUE
+          25              01 AV        10774              AV      AVENUE
+          26              01 AV         3820              AV      AVENUE
+          27              01 AV         4068              AV      AVENUE
+          28              01 AV         3552              AV      AVENUE
+          29              01 AV         3355              AV      AVENUE
+          {\ldots}               {\ldots}          {\ldots}             {\ldots}         {\ldots}
+          11629  WORLD TRADE DR         7770              DR       DRIVE
+          11630  WORLD TRADE DR         9480              DR       DRIVE
+          11631  WORLD TRADE DR         8176              DR       DRIVE
+          11632  WORLD TRADE DR         7300              DR       DRIVE
+          11633  WORLD TRADE DR        10214              DR       DRIVE
+          11634  WORLD TRADE DR         8260              DR       DRIVE
+          11635  WORLD TRADE DR         9145              DR       DRIVE
+          11636  WORLD TRADE DR         8223              DR       DRIVE
+          11637  WORLD TRADE DR         9537              DR       DRIVE
+          11638  WORLD TRADE DR         4880              DR       DRIVE
+          11639  WORLD TRADE DR         5805              DR       DRIVE
+          11640  WORLD TRADE DR         5179              DR       DRIVE
+          11641  WORLD TRADE DR         7890              DR       DRIVE
+          11642       WORSCH DR         1409              DR       DRIVE
+          11643       WORSCH DR         1696              DR       DRIVE
+          11644       WORSCH DR         1431              DR       DRIVE
+          11645    WYNDHAVEN DR          543              DR       DRIVE
+          11646  YERBA SANTA DR         2290              DR       DRIVE
+          11647   YSABEL CRK RD          605              RD        ROAD
+          11648         ZION AV        10890              AV      AVENUE
+          11649         ZION AV        12940              AV      AVENUE
+          11650         ZION AV        11385              AV      AVENUE
+          11651         ZION AV        11732              AV      AVENUE
+          11652         ZION AV        11560              AV      AVENUE
+          11653         ZION AV        12697              AV      AVENUE
+          11654          ZOO PL         6300              PL       PLACE
+          11655          ZOO PL         9430              PL       PLACE
+          11656          ZOO PL         5595              PL       PLACE
+          11657          ZOO PL         4425              PL       PLACE
+          11658          ZOO PL         6274              PL       PLACE
+          
+          [11004 rows x 4 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}195}]:} \PY{n}{count} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{n}{counts\PYZus{}cleaned}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+          \PY{n}{counts\PYZus{}cleaned}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{count}
+          \PY{n}{counts\PYZus{}cleaned}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}QYK\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:2: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row\_indexer,col\_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html\#indexing-view-versus-copy
+  
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}195}]:}           street\_name  total\_count street\_type\_abb street\_type  count
+          0               01 AV        18010              AV      AVENUE    1.0
+          1               01 AV        20060              AV      AVENUE    1.0
+          2               01 AV        19597              AV      AVENUE    1.0
+          3               01 AV         2298              AV      AVENUE    1.0
+          4               01 AV        15625              AV      AVENUE    1.0
+          5               01 AV        13569              AV      AVENUE    1.0
+          6               01 AV        13389              AV      AVENUE    1.0
+          7               01 AV        13995              AV      AVENUE    1.0
+          8               01 AV        27450              AV      AVENUE    1.0
+          9               01 AV        22345              AV      AVENUE    1.0
+          10              01 AV        18742              AV      AVENUE    1.0
+          11              01 AV        24463              AV      AVENUE    1.0
+          12              01 AV        25715              AV      AVENUE    1.0
+          13              01 AV        10410              AV      AVENUE    1.0
+          14              01 AV        12905              AV      AVENUE    1.0
+          15              01 AV        11278              AV      AVENUE    1.0
+          16              01 AV         3920              AV      AVENUE    1.0
+          17              01 AV         3285              AV      AVENUE    1.0
+          18              01 AV         3414              AV      AVENUE    1.0
+          19              01 AV         3419              AV      AVENUE    1.0
+          20              01 AV         3477              AV      AVENUE    1.0
+          21              01 AV         3474              AV      AVENUE    1.0
+          22              01 AV        11148              AV      AVENUE    1.0
+          23              01 AV        11421              AV      AVENUE    1.0
+          24              01 AV        10003              AV      AVENUE    1.0
+          25              01 AV        10774              AV      AVENUE    1.0
+          26              01 AV         3820              AV      AVENUE    1.0
+          27              01 AV         4068              AV      AVENUE    1.0
+          28              01 AV         3552              AV      AVENUE    1.0
+          29              01 AV         3355              AV      AVENUE    1.0
+          {\ldots}               {\ldots}          {\ldots}             {\ldots}         {\ldots}    {\ldots}
+          11629  WORLD TRADE DR         7770              DR       DRIVE    1.0
+          11630  WORLD TRADE DR         9480              DR       DRIVE    1.0
+          11631  WORLD TRADE DR         8176              DR       DRIVE    1.0
+          11632  WORLD TRADE DR         7300              DR       DRIVE    1.0
+          11633  WORLD TRADE DR        10214              DR       DRIVE    1.0
+          11634  WORLD TRADE DR         8260              DR       DRIVE    1.0
+          11635  WORLD TRADE DR         9145              DR       DRIVE    1.0
+          11636  WORLD TRADE DR         8223              DR       DRIVE    1.0
+          11637  WORLD TRADE DR         9537              DR       DRIVE    1.0
+          11638  WORLD TRADE DR         4880              DR       DRIVE    1.0
+          11639  WORLD TRADE DR         5805              DR       DRIVE    1.0
+          11640  WORLD TRADE DR         5179              DR       DRIVE    1.0
+          11641  WORLD TRADE DR         7890              DR       DRIVE    1.0
+          11642       WORSCH DR         1409              DR       DRIVE    1.0
+          11643       WORSCH DR         1696              DR       DRIVE    1.0
+          11644       WORSCH DR         1431              DR       DRIVE    1.0
+          11645    WYNDHAVEN DR          543              DR       DRIVE    1.0
+          11646  YERBA SANTA DR         2290              DR       DRIVE    1.0
+          11647   YSABEL CRK RD          605              RD        ROAD    1.0
+          11648         ZION AV        10890              AV      AVENUE    1.0
+          11649         ZION AV        12940              AV      AVENUE    1.0
+          11650         ZION AV        11385              AV      AVENUE    1.0
+          11651         ZION AV        11732              AV      AVENUE    1.0
+          11652         ZION AV        11560              AV      AVENUE    1.0
+          11653         ZION AV        12697              AV      AVENUE    1.0
+          11654          ZOO PL         6300              PL       PLACE    1.0
+          11655          ZOO PL         9430              PL       PLACE    1.0
+          11656          ZOO PL         5595              PL       PLACE    1.0
+          11657          ZOO PL         4425              PL       PLACE    1.0
+          11658          ZOO PL         6274              PL       PLACE    1.0
+          
+          [11004 rows x 5 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}196}]:} \PY{n}{grouped\PYZus{}collision}\PY{o}{=}\PY{n}{counts\PYZus{}cleaned}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{street\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+          \PY{n}{grouped\PYZus{}collision}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}196}]:}                   total\_count  count
+          street\_name                         
+          01 AV                  696037   79.0
+          02 AV                   47791   13.0
+          03 AV                   80911   21.0
+          04 AV                  708009   77.0
+          05 AV                  849199   87.0
+          06 AV                 1257625   77.0
+          07 AV                   59831   12.0
+          08 AV                   74704   20.0
+          09 AV                   53779   16.0
+          10 AV                  485243   38.0
+          11 AV                  438112   33.0
+          14 ST                    6466    2.0
+          16 ST                  212697   31.0
+          17 ST                   32491   13.0
+          19 ST                   49546    7.0
+          25 ST                  236581   29.0
+          26 ST                   58438    7.0
+          27 ST                   27442    6.0
+          28 ST                  542711   54.0
+          30  ST                   9713    1.0
+          30 ST                  718655   81.0
+          32 ST                  416495   61.0
+          33 ST                   74171   17.0
+          35 ST                  136294   34.0
+          36 ST                   26144    8.0
+          37 ST                    5191    4.0
+          38 ST                   38525   15.0
+          39 ST                    8238    2.0
+          40 ST                   27501    9.0
+          41 ST                    3705    2.0
+          {\ldots}                       {\ldots}    {\ldots}
+          WABASKA DR              19627    8.0
+          WANDERMERE  DR           1995    1.0
+          WANDERMERE DR           12407    5.0
+          WARD RD                 52742    6.0
+          WARING RD              216742   12.0
+          WASHINGTON PL            1775    1.0
+          WASHINGTON ST         1893957   73.0
+          WAVERLY AV                782    3.0
+          WESTMORE RD             39387    9.0
+          WESTONHILL DR          155883   30.0
+          WESTOVER PL              4467    2.0
+          WESTVIEW PY            304197   19.0
+          WIGHTMAN ST             94930   16.0
+          WILLOW CREEK RD         33308    6.0
+          WILLOW RD               57016    5.0
+          WILLS CREEK RD           3686    3.0
+          WINDING CREEK DR         2200    1.0
+          WINNETT ST              13838    5.0
+          WINONA AV               14610    6.0
+          WITHERBY ST             21065    3.0
+          WOODMAN ST             573237   39.0
+          WOODROW AV               2464    2.0
+          WORDEN ST               38783    7.0
+          WORLD TRADE DR         101859   13.0
+          WORSCH DR                4536    3.0
+          WYNDHAVEN DR              543    1.0
+          YERBA SANTA DR           2290    1.0
+          YSABEL CRK RD             605    1.0
+          ZION AV                 71204    6.0
+          ZOO PL                  32024    5.0
+          
+          [965 rows x 2 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}198}]:} \PY{n}{grouped\PYZus{}collision}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{grouped\PYZus{}collision}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{/}\PY{n}{grouped\PYZus{}collision}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{total\PYZus{}count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{grouped\PYZus{}collision}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}198}]:}                   total\_count  count     ratio
+          street\_name                                   
+          01 AV                  696037   79.0  0.000113
+          02 AV                   47791   13.0  0.000272
+          03 AV                   80911   21.0  0.000260
+          04 AV                  708009   77.0  0.000109
+          05 AV                  849199   87.0  0.000102
+          06 AV                 1257625   77.0  0.000061
+          07 AV                   59831   12.0  0.000201
+          08 AV                   74704   20.0  0.000268
+          09 AV                   53779   16.0  0.000298
+          10 AV                  485243   38.0  0.000078
+          11 AV                  438112   33.0  0.000075
+          14 ST                    6466    2.0  0.000309
+          16 ST                  212697   31.0  0.000146
+          17 ST                   32491   13.0  0.000400
+          19 ST                   49546    7.0  0.000141
+          25 ST                  236581   29.0  0.000123
+          26 ST                   58438    7.0  0.000120
+          27 ST                   27442    6.0  0.000219
+          28 ST                  542711   54.0  0.000100
+          30  ST                   9713    1.0  0.000103
+          30 ST                  718655   81.0  0.000113
+          32 ST                  416495   61.0  0.000146
+          33 ST                   74171   17.0  0.000229
+          35 ST                  136294   34.0  0.000249
+          36 ST                   26144    8.0  0.000306
+          37 ST                    5191    4.0  0.000771
+          38 ST                   38525   15.0  0.000389
+          39 ST                    8238    2.0  0.000243
+          40 ST                   27501    9.0  0.000327
+          41 ST                    3705    2.0  0.000540
+          {\ldots}                       {\ldots}    {\ldots}       {\ldots}
+          WABASKA DR              19627    8.0  0.000408
+          WANDERMERE  DR           1995    1.0  0.000501
+          WANDERMERE DR           12407    5.0  0.000403
+          WARD RD                 52742    6.0  0.000114
+          WARING RD              216742   12.0  0.000055
+          WASHINGTON PL            1775    1.0  0.000563
+          WASHINGTON ST         1893957   73.0  0.000039
+          WAVERLY AV                782    3.0  0.003836
+          WESTMORE RD             39387    9.0  0.000229
+          WESTONHILL DR          155883   30.0  0.000192
+          WESTOVER PL              4467    2.0  0.000448
+          WESTVIEW PY            304197   19.0  0.000062
+          WIGHTMAN ST             94930   16.0  0.000169
+          WILLOW CREEK RD         33308    6.0  0.000180
+          WILLOW RD               57016    5.0  0.000088
+          WILLS CREEK RD           3686    3.0  0.000814
+          WINDING CREEK DR         2200    1.0  0.000455
+          WINNETT ST              13838    5.0  0.000361
+          WINONA AV               14610    6.0  0.000411
+          WITHERBY ST             21065    3.0  0.000142
+          WOODMAN ST             573237   39.0  0.000068
+          WOODROW AV               2464    2.0  0.000812
+          WORDEN ST               38783    7.0  0.000180
+          WORLD TRADE DR         101859   13.0  0.000128
+          WORSCH DR                4536    3.0  0.000661
+          WYNDHAVEN DR              543    1.0  0.001842
+          YERBA SANTA DR           2290    1.0  0.000437
+          YSABEL CRK RD             605    1.0  0.001653
+          ZION AV                 71204    6.0  0.000084
+          ZOO PL                  32024    5.0  0.000156
+          
+          [965 rows x 3 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}202}]:} \PY{n}{grouped\PYZus{}collision}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ascending} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}202}]:}                        total\_count  count     ratio
+          street\_name                                        
+          ALLEY S/O EL CAJON BL            0    1.0       inf
+          VIKING WY                      247    2.0  0.008097
+          LOOKOUT DR                     523    3.0  0.005736
+          WAVERLY AV                     782    3.0  0.003836
+          COMPASS PT (S) DR              294    1.0  0.003401
+          PESCADERO AV                   295    1.0  0.003390
+          BONAIR ST                      885    3.0  0.003390
+          BEAUMONT AV                    932    3.0  0.003219
+          SPRUCE ST                      694    2.0  0.002882
+          GRANDEE PL                     700    2.0  0.002857
+          CHARBONO ST                    366    1.0  0.002732
+          AMALFI ST                      380    1.0  0.002632
+          CHELSEA ST                    1146    3.0  0.002618
+          CAMPHOR LN                     410    1.0  0.002439
+          ROMERO DR                     1308    3.0  0.002294
+          MORRELL ST                    1844    4.0  0.002169
+          LEWISON DR                     922    2.0  0.002169
+          CLIFFRIDGE AV                 2365    5.0  0.002114
+          BIGNELL DR                     475    1.0  0.002105
+          LOFTY TRAIL DR                 510    1.0  0.001961
+          FRANKLIN RIDGE RD              517    1.0  0.001934
+          WYNDHAVEN DR                   543    1.0  0.001842
+          CHELSEA AV                    3380    6.0  0.001775
+          YSABEL CRK RD                  605    1.0  0.001653
+          N MOUNTAIN VIEW DR             613    1.0  0.001631
+          MIDWAY ST                     1865    3.0  0.001609
+          COLLURA ST                    1921    3.0  0.001562
+          BIRD ROCK AV                  1961    3.0  0.001530
+          ROBBINS ST                     660    1.0  0.001515
+          REED AV                       4018    6.0  0.001493
+          {\ldots}                            {\ldots}    {\ldots}       {\ldots}
+          GRAND AV                   1252172   46.0  0.000037
+          BERNARDO CENTER DR           27534    1.0  0.000036
+          MAST BL                      83917    3.0  0.000036
+          W LAUREL ST                  28002    1.0  0.000036
+          RICHLAND ST                  28205    1.0  0.000035
+          DEL MAR HTS RD              962969   34.0  0.000035
+          RANCHO PENASQUITOS BL       476637   16.0  0.000034
+          PALM AV                    1348344   45.0  0.000033
+          N HARBOR DR                1658118   55.0  0.000033
+          TED WILLIAMS PY             184513    6.0  0.000033
+          GARNET AV                  1864711   60.0  0.000032
+          RANCHO BERNARDO RD          847276   27.0  0.000032
+          QUALCOMM WY                 472029   15.0  0.000032
+          DEL MAR HEIGHTS RD           31768    1.0  0.000031
+          ROSECRANS ST               2249497   69.0  0.000031
+          SEA WORLD DR                597280   18.0  0.000030
+          BARNETT AV                  334257   10.0  0.000030
+          BALBOA AV                  3754933  108.0  0.000029
+          MISSION BAY DR             1110779   30.0  0.000027
+          FRIARS RD                  2962533   78.0  0.000026
+          POWAY RD                    734116   18.0  0.000025
+          SCRIPPS POWAY PY            660599   16.0  0.000024
+          W MISSION BAY DR            966498   23.0  0.000024
+          TORREY PINES RD            2077046   48.0  0.000023
+          FRIARS  RD                   44318    1.0  0.000023
+          LA JOLLA VILLAGE DR        1923912   42.0  0.000022
+          MIRAMAR RD                 3257681   64.0  0.000020
+          LA JOLLA PY                 458510    9.0  0.000020
+          LA JOLLA VILLAGE PY          51344    1.0  0.000019
+          MIRA MESA BL               4537449   88.0  0.000019
+          
+          [965 rows x 3 columns]
+\end{Verbatim}
+            
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
